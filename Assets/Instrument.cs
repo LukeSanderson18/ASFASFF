@@ -18,6 +18,7 @@ public class Instrument : MonoBehaviour {
         text = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
 
         //how much time until an instrument starts detoriating
+        det = false;
         Invoke("Det", Random.Range(3f,14f));
 	}
 
@@ -43,6 +44,7 @@ public class Instrument : MonoBehaviour {
         {
             health = 100;
             Invoke("Start", 0);
+            fullyFixed = false;
         }
 	
 	}

@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     public float cameraZoomSpeed = 1.0f;
 
     private Rigidbody2D rb;
-    private GameObject isBelowInstrument = null;
+    private Instrument isBelowInstrument = null;
     private bool isOnTopFloor = false;
     private Vector3 cameraDefaultPosition;
     private float cameraDefaultSize;
@@ -56,6 +56,10 @@ public class Player : MonoBehaviour {
                     isOnTopFloor = false;
                 }
 
+                if (Input.GetButtonDown("Fix") && isBelowInstrument)
+                {
+                    isBelowInstrument.fullyFixed = true;
+                }
             }
         }
         if (transform.position.y > 0.02f)
@@ -63,8 +67,8 @@ public class Player : MonoBehaviour {
             topFloor.SetActive(true);
         }
 
+
         // Camera animation
-        
         if (isOnTopFloor)
         {
             cameraLerpPosition = Mathf.Clamp01(cameraLerpPosition + cameraZoomSpeed * Time.deltaTime);
@@ -89,7 +93,7 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        isBelowInstrument = collision.gameObject;
+        isBelowInstrument = collision.gameObject.GetComponent<Instrument>();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
