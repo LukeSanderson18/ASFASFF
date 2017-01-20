@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
     public GameObject topFloor;
     public Camera camera;
     public float cameraZoomSpeed = 1.0f;
-
+    private SpriteRenderer spr;
     private Rigidbody2D rb;
     private Instrument isBelowInstrument = null;
     private bool isOnTopFloor = false;
@@ -16,10 +16,13 @@ public class Player : MonoBehaviour {
     private float cameraDefaultSize;
     private float cameraLerpPosition;
     private bool isZoomed;
+    Animator anim;
 	// Use this for initialization
 	void Start () {
 
         rb = GetComponent<Rigidbody2D>();
+        spr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
 
         cameraDefaultPosition = camera.transform.position;
         cameraDefaultSize = camera.orthographicSize;
@@ -28,6 +31,34 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float dx = Input.GetAxis("Horizontal");
+
+        if (dx > 0.1f)
+        {
+            spr.flipX = false;
+        }
+        else if (dx < -0.1f)
+        {
+            spr.flipX = true;
+        }
+
+        //simple player animations...
+        if (rb.velocity.y == 0)
+        {
+            if (dx != 0)
+            {
+                anim.Play("Walk");
+            }
+            else
+            {
+                anim.Play("Idle");
+            }
+        }
+        else
+        {
+            anim.Play("Jump");
+        }
+
+
         if (dx != 0.0f && !isOnTopFloor)
         {
             gameObject.transform.Translate(dx * movementSpeed * Time.deltaTime, 0, 0);
