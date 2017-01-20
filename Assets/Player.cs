@@ -83,13 +83,12 @@ public class Player : MonoBehaviour {
                 {
                     rb.AddForce(Vector2.up * (jumpSpeed * 0.3f));
                     topFloor.SetActive(false);
-                    print("turn floor off");
                     isOnTopFloor = false;
                 }
 
                 if (Input.GetButtonDown("Fix") && isBelowInstrument)
                 {
-                    isBelowInstrument.fullyFixed = true;
+                    isBelowInstrument.Fix();
                 }
             }
         }
@@ -97,7 +96,6 @@ public class Player : MonoBehaviour {
         {
             topFloor.SetActive(true);
         }
-
 
         // Camera animation
         if (isOnTopFloor)
