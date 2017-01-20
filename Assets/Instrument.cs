@@ -11,6 +11,8 @@ public class Instrument : MonoBehaviour {
     public bool beingFixed = false;
     public bool fullyFixed = false;
 
+    private int timesDeteriorated;
+     
 	// Use this for initialization
 	void Start () {
 
@@ -19,12 +21,13 @@ public class Instrument : MonoBehaviour {
 
         //how much time until an instrument starts detoriating
         det = false;
-        Invoke("Det", Random.Range(3f,14f));
+        Invoke("Det", Random.Range(3f, Mathf.Clamp(14f - timesDeteriorated, 4f, 100f)));
 	}
 
     void Det()
     {
         det = true;
+        timesDeteriorated++;
     }
 	
 	// Update is called once per frame
@@ -36,7 +39,7 @@ public class Instrument : MonoBehaviour {
         {
             if (health > 0)
             {
-                health -= Time.deltaTime * randDetoriation;
+                health -= Time.deltaTime * randDetoriation * (1 + timesDeteriorated);
             }
         }
 
