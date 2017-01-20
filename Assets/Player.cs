@@ -4,9 +4,14 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
     public float movementSpeed = 1.0f;
+    public float jumpSpeed = 20f;
+    Rigidbody2D rb;
+    public GameObject topFloor;
 
 	// Use this for initialization
 	void Start () {
+
+        rb = GetComponent<Rigidbody2D>();
 	
 	}
 	
@@ -18,9 +23,27 @@ public class Player : MonoBehaviour {
             gameObject.transform.Translate(dx * movementSpeed * Time.deltaTime, 0, 0);
         }
 
-        if (Input.GetButtonDown("Jump"))
+        //such lazy floor """""detection"""""
+        if (transform.position.y < -3.17)               //on bottom layer
         {
-            gameObject.GetComponent<Animator>().Play("JumpIn");
+            if (Input.GetButtonDown("Jump"))
+            {
+                rb.AddForce(Vector2.up * jumpSpeed);
+                topFloor.SetActive(true);
+            }
+        }
+
+        if (transform.position.y > -0.26)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                rb.AddForce(Vector2.up * (jumpSpeed * 0.2f));
+                topFloor.SetActive(false);
+            }
+        }
+        if (transform.position.y < 0.2f)
+        {
+            topFloor.SetActive(true);
         }
 	}
 }
