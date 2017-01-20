@@ -24,24 +24,25 @@ public class Player : MonoBehaviour {
         }
 
         //such lazy floor """""detection"""""
-        if (transform.position.y < -3.17)               //on bottom layer
+        if (transform.position.y < -3.17f)               //on bottom layer
         {
             if (Input.GetButtonDown("Jump"))
             {
                 rb.AddForce(Vector2.up * jumpSpeed);
-                topFloor.SetActive(true);
-            }
-        }
-
-        if (transform.position.y > -0.26)
-        {
-            if (Input.GetButtonDown("Jump"))
-            {
-                rb.AddForce(Vector2.up * (jumpSpeed * 0.2f));
                 topFloor.SetActive(false);
             }
         }
-        if (transform.position.y < 0.2f)
+
+        if (transform.position.y > -0.26f)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                rb.AddForce(Vector2.up * (jumpSpeed * 0.3f));
+                topFloor.SetActive(false);
+                print("turn floor off");
+            }
+        }
+        if (transform.position.y > 0.02f)
         {
             topFloor.SetActive(true);
         }
