@@ -30,16 +30,20 @@ public class LevelSelectManager : MonoBehaviour {
         {
             print("clicked!");
 
-            Piano.GetComponent<Instrument>().Init(goodPiano, badPiano);
-            Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet);
-            Violin.GetComponent<Instrument>().Init(goodViolin, badViolin);
-            Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba);
-            Drum.GetComponent<Instrument>().Init(goodDrum, goodDrum);
+            Invoke("ASDF", 1);
 
             clicked = 0;
             GameState.Paused = false;
             GameState.Score = 0;
         }
+    }
+    void ASDF()
+    {
+        Piano.GetComponent<Instrument>().Init(goodPiano, badPiano);
+        Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet);
+        Violin.GetComponent<Instrument>().Init(goodViolin, badViolin);
+        Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba);
+        Drum.GetComponent<Instrument>().Init(goodDrum, goodDrum);
     }
 
     void Update()
@@ -48,6 +52,7 @@ public class LevelSelectManager : MonoBehaviour {
         {
             clicked += Time.deltaTime;
             GameState.Paused = false;
+
         }
         if(clicked > 0.75f)
         {
@@ -56,6 +61,7 @@ public class LevelSelectManager : MonoBehaviour {
             Mathf.Lerp(transform.parent.position.y, 20, Time.deltaTime * 3),
             transform.parent.position.z);
         }
+       
         if (clicked > 5f)
             clicked = -1f;
     }

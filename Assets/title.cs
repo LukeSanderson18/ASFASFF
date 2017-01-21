@@ -26,7 +26,7 @@ public class title : MonoBehaviour {
             transform.position = new Vector3(transform.position.x, 
                 Mathf.Lerp(transform.position.y, outfloat, Time.deltaTime * 3), -1.08f);
 
-            Debug.Log(time);
+            //Debug.Log(time);
         }
     }
 
