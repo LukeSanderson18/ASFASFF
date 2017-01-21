@@ -37,7 +37,7 @@ public class Player : MonoBehaviour {
 	void Update () {
         float dx = Input.GetAxis("Horizontal");
 
-        if (!isOnTopFloor)
+        if (!isOnTopFloor || !isBelowInstrument)
         {
             if (dx > 0.1f)
             {
@@ -78,11 +78,6 @@ public class Player : MonoBehaviour {
             anim.Play("Hit");
         }
 
-        if (dx != 0.0f && !isOnTopFloor)
-        {
-            gameObject.transform.Translate(dx * movementSpeed * Time.deltaTime, 0, 0);
-        }
-
         //such lazy floor """""detection"""""
         if (rb.velocity.y == 0.0f)
         {
@@ -96,11 +91,11 @@ public class Player : MonoBehaviour {
                 }
             }
 
-            if (transform.position.y > -0.26f)
+            if (transform.position.y > -0.26f && justHitByTomato <= 0f)
             {
                 if (Input.GetButtonDown("Jump"))
                 {
-                    rb.AddForce(Vector2.up * (jumpSpeed * 0.3f));
+                    rb.AddForce(Vector2.up * (jumpSpeed * 0.2f));
                     topFloor.SetActive(false);
                     isOnTopFloor = false;
                 }
@@ -114,6 +109,12 @@ public class Player : MonoBehaviour {
         if (transform.position.y > 0.02f)
         {
             topFloor.SetActive(true);
+        }
+
+        // Move the player horizontally
+        if (dx != 0.0f && !isOnTopFloor)
+        {
+            gameObject.transform.Translate(dx * movementSpeed * Time.deltaTime, 0, 0);
         }
 
         // Camera animation
@@ -174,11 +175,11 @@ public class Player : MonoBehaviour {
         Tomato tomato = collision.gameObject.GetComponent<Tomato>();
         if (tomato)
         {
-            if (tomato.isEnabled && justHitByTomato <= 0f)
+            if (tomato.isEnabled && justHitByTomato <= 0f && isOnTopFloor)
             {
                 justHitByTomato = 0.5f;
 
-                rb.AddForce(Vector2.up * (jumpSpeed * 0.3f));
+                rb.AddForce(Vector2.up * (jumpSpeed * 0.2f));
                 topFloor.SetActive(false);
                 isOnTopFloor = false;
             }
