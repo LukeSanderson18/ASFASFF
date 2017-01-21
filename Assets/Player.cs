@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     public Tomato tomato;
     public float cameraZoomSpeed = 1.0f;
     public AudioClip[] hittingSounds;
+    public AudioClip tomatoSlap;
 
     private SpriteRenderer spr;
     private Rigidbody2D rb;
@@ -209,7 +210,8 @@ public class Player : MonoBehaviour {
             if (tomato.isEnabled && justHitByTomato <= 0f && isOnTopFloor)
             {
                 justHitByTomato = 0.5f;
-
+                audio.clip = tomatoSlap;
+                audio.Play();
                 rb.AddForce(Vector2.up * (jumpSpeed * 0.2f));
                 topFloor.SetActive(false);
                 isOnTopFloor = false;
