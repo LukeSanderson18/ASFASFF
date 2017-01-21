@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
     private bool justThrewTomato;
     private float justHitByTomato;
     Animator anim;
+
 	// Use this for initialization
 	void Start () {
 
@@ -35,52 +36,51 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameState.Paused)
-        {
-            anim.Play("Idle");
-            return;
-        }
-
         float dx = Input.GetAxis("Horizontal");
 
-        if (isBelowInstrument && !isOnTopFloor)
-        {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
-        }
-        else
-        {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
-        }
-        if (!isOnTopFloor || !isBelowInstrument)
-        {
-            if (dx > 0.1f)
+        if (!GameState.Paused) {
+            // Arrow
+            if (isBelowInstrument && !isOnTopFloor)
             {
-                spr.flipX = false;
-            }
-            else if (dx < -0.1f)
-            {
-                spr.flipX = true;
-            }
-
-        }
-        else
-        {
-            if (isBelowInstrument.transform.position.x < transform.position.x)
-            {
-                spr.flipX = true;
+                transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
             }
             else
             {
-                spr.flipX = false;
+                transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+            }
+
+            // Look at / flip
+            if (!isOnTopFloor || !isBelowInstrument)
+            {
+                if (dx > 0.1f)
+                {
+                    spr.flipX = false;
+                }
+                else if (dx < -0.1f)
+                {
+                    spr.flipX = true;
+                }
+
+            }
+            else
+            {
+                if (isBelowInstrument.transform.position.x < transform.position.x)
+                {
+                    spr.flipX = true;
+                }
+                else
+                {
+                    spr.flipX = false;
+                }
             }
         }
         
         //simple player animations...
-        if (rb.velocity.y == 0 && dx != 0 && !isOnTopFloor)
+        if (!GameState.Paused && rb.velocity.y == 0 && dx != 0 && !isOnTopFloor)
         {
             anim.Play("Walk");
         }
-        else if (rb.velocity.y == 0)
+        else if (GameState.Paused || rb.velocity.y == 0)
         {
             anim.Play("Idle");
         }
@@ -121,19 +121,25 @@ public class Player : MonoBehaviour {
                 }
             }
         }
+        if (GameState.Paused && rb.velocity.y == 0.0f && transform.position.y > -0.26f && isOnTopFloor) // Force jump down on game paused
+        {
+            rb.AddForce(Vector2.up * (jumpSpeed * 0.2f));
+            topFloor.SetActive(false);
+            isOnTopFloor = false;
+        }
         if (transform.position.y > 0.02f)
         {
             topFloor.SetActive(true);
         }
 
         // Move the player horizontally
-        if (dx != 0.0f && !isOnTopFloor)
+        if (!GameState.Paused && dx != 0.0f && !isOnTopFloor)
         {
             gameObject.transform.Translate(dx * movementSpeed * Time.deltaTime, 0, 0);
         }
 
         // Camera animation
-        if (isOnTopFloor)
+        if (isOnTopFloor && !GameState.Paused)
         {
             cameraLerpPosition = Mathf.Clamp01(cameraLerpPosition + cameraZoomSpeed * Time.deltaTime);
             camera.transform.position = new Vector3(
