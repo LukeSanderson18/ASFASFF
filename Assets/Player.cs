@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
     public float movementSpeed = 1.0f;
     public float jumpSpeed = 20f;
     public GameObject topFloor;
-    public Camera camera;
+    public new Camera camera;
     public Tomato tomato;
     public float cameraZoomSpeed = 1.0f;
     
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
     private bool isZoomed;
     private bool isSpotted;
     private bool justThrewTomato;
-    private bool justHitByTomato;
+    private float justHitByTomato;
     Animator anim;
 	// Use this for initialization
 	void Start () {
@@ -59,25 +59,17 @@ public class Player : MonoBehaviour {
                 spr.flipX = false;
             }
         }
-
+        
         //simple player animations...
-        if (rb.velocity.y == 0)
+        if (rb.velocity.y == 0 && dx != 0 && !isOnTopFloor)
         {
-            if (dx != 0)
-            {
-                anim.Play("Walk");
-            }
-            else if (!justHitByTomato)
-            {
-                anim.Play("Idle");
-            }
-            else
-            {
-                anim.Play("Hit");
-            }
-            
+            anim.Play("Walk");
         }
-        else if (!justHitByTomato)
+        else if (rb.velocity.y == 0)
+        {
+            anim.Play("Idle");
+        }
+        else if (justHitByTomato <= 0f)
         {
             anim.Play("Jump");
         }
@@ -85,8 +77,6 @@ public class Player : MonoBehaviour {
         {
             anim.Play("Hit");
         }
-
-
 
         if (dx != 0.0f && !isOnTopFloor)
         {
@@ -155,6 +145,9 @@ public class Player : MonoBehaviour {
         }
         else if (!isOnTopFloor)
             justThrewTomato = false;
+
+        if (justHitByTomato > 0f)
+            justHitByTomato -= Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -174,8 +167,6 @@ public class Player : MonoBehaviour {
             isBelowInstrument = null;
         else if (collision.gameObject.GetComponent<Spotlight>())
             isSpotted = false;
-        else if (collision.gameObject.GetComponent<Tomato>())
-            justHitByTomato = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -183,16 +174,14 @@ public class Player : MonoBehaviour {
         Tomato tomato = collision.gameObject.GetComponent<Tomato>();
         if (tomato)
         {
-            if (tomato.isEnabled && !justHitByTomato)
+            if (tomato.isEnabled && justHitByTomato <= 0f)
             {
-                justHitByTomato = true;
+                justHitByTomato = 0.5f;
 
                 rb.AddForce(Vector2.up * (jumpSpeed * 0.3f));
                 topFloor.SetActive(false);
                 isOnTopFloor = false;
             }
-            else if (!tomato.isEnabled)
-                justHitByTomato = false;
         }
     }
 }
