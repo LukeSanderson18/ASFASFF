@@ -54,6 +54,9 @@ public class Instrument : MonoBehaviour {
         rend.material.SetTextureScale("_MainTex", new Vector2(2f - health * 0.01f, Mathf.Lerp(0.75f, 1.35f, health * 0.01f)));
         Vector2 offset = rend.material.GetTextureOffset("_MainTex");
         rend.material.SetTextureOffset("_MainTex", new Vector2(offset.x + Time.deltaTime * (2.5f - health * 0.02f), Mathf.Lerp(0.125f, -0.185f, health * 0.01f)));
+
+        // Update score
+        GameState.Score += Time.deltaTime * Mathf.Clamp01(health * 0.0125f - 0.25f);
     }
 
     public void Fix()
