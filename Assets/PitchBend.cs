@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class PitchBend : MonoBehaviour {
+
+    public AudioClip good;
+    public AudioClip bad;
     public AudioMixer m;
     int state = 0;
     float bend = 0.05f;
@@ -15,7 +18,7 @@ public class PitchBend : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float h = GetComponent<Instrument>().health;
-        if (h > 75)
+        if (h > 25)
         {
             if (state != 0)
             {
@@ -23,7 +26,7 @@ public class PitchBend : MonoBehaviour {
             }
             state = 0;
         }
-        if (h <= 75)
+        if (h <= 25)
         {
             if (state == 0)
             {

@@ -6,7 +6,7 @@ public class curtainScript : MonoBehaviour {
     
     private float distance;
     float screenWidth;
-    bool onStage = true;
+    bool open = false;
 
 	// Use this for initialization
 	void Start () {
@@ -28,22 +28,31 @@ public class curtainScript : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.C))
         {
-            onStage = !onStage;
+            open = !open;
         }
+
+        open = transform.parent.parent.GetComponent<CurtainManager>().open;
 		
-        if (onStage)
+        if (open)
         {
-            transform.position = new Vector3(Mathf.Lerp(transform.position.x, screenWidth, Time.deltaTime * 4), transform.position.y, transform.position.z);
+            Open();
         }
         else
         {
-            transform.position = new Vector3(Mathf.Lerp(transform.position.x, screenWidth-distance, Time.deltaTime * 4), transform.position.y, transform.position.z);
+            Close();
         }
 
     }
 
-    void setMotion()
+    void Open()
     {
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, screenWidth, Time.deltaTime * 4), transform.position.y, transform.position.z);
+
+    }
+
+    void Close()
+    {
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, screenWidth - distance, Time.deltaTime * 4), transform.position.y, transform.position.z);
 
     }
 }
