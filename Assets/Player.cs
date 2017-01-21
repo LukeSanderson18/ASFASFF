@@ -32,13 +32,27 @@ public class Player : MonoBehaviour {
 	void Update () {
         float dx = Input.GetAxis("Horizontal");
 
-        if (dx > 0.1f)
+        if (!isOnTopFloor)
         {
-            spr.flipX = false;
+            if (dx > 0.1f)
+            {
+                spr.flipX = false;
+            }
+            else if (dx < -0.1f)
+            {
+                spr.flipX = true;
+            }
         }
-        else if (dx < -0.1f)
+        else
         {
-            spr.flipX = true;
+            if (isBelowInstrument.transform.position.x < transform.position.x)
+            {
+                spr.flipX = true;
+            }
+            else
+            {
+                spr.flipX = false;
+            }
         }
 
         //simple player animations...
