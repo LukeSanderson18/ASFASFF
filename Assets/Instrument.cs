@@ -19,7 +19,7 @@ public class Instrument : MonoBehaviour {
 	void Start () {
         randDetoriation = Random.Range(0.8f, 3f);
         text = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
-        rend = GetComponent<Renderer>();
+        rend = transform.GetChild(0).GetComponent<Renderer>();
 
         //how much time until an instrument starts detoriating
         if (!det)
@@ -46,6 +46,19 @@ public class Instrument : MonoBehaviour {
         else
         {
             health = 100f;
+        }
+
+        if (health >= 75)
+        {
+            rend.material.mainTexture = greenHealth;
+        }
+        else if (health > 50 && health < 75)
+        {
+            rend.material.mainTexture = yellowHealth;
+        }
+        else
+        {
+            rend.material.mainTexture = redHealth;
         }
 	}
 
