@@ -5,8 +5,7 @@ using UnityEngine.Audio;
 
 public class PitchBend : MonoBehaviour {
 
-    public AudioClip good;
-    public AudioClip bad;
+    
     public AudioMixer m;
     int state = 0;
     float bend = 0.05f;

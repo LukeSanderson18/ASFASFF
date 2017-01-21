@@ -4,6 +4,12 @@ using System.Collections;
 
 public class Instrument : MonoBehaviour {
 
+    public AudioClip good;
+    public AudioClip bad;
+
+    public AudioSource goodAudioSource;
+    public AudioSource badAudioSource;
+
     public float health;
     float randDetoriation;
     TextMesh text;
@@ -35,6 +41,9 @@ public class Instrument : MonoBehaviour {
 
         text.text = "" + health.ToString("F2");
 
+        if (health <= 50)
+        {
+        }
         if (det) //if instrumet has started detoriating, det by randDetoriation (set in Start());
         {
             health -= Time.deltaTime * randDetoriation * (1 + timesDeteriorated);
