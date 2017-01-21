@@ -8,9 +8,6 @@ public class Instrument : MonoBehaviour {
     float randDetoriation;
     TextMesh text;
     public bool det = false;
-    public Texture greenHealth;
-    public Texture yellowHealth;
-    public Texture redHealth;
     Renderer rend;
 
     private int timesDeteriorated;
@@ -48,19 +45,16 @@ public class Instrument : MonoBehaviour {
             health = 100f;
         }
 
-        if (health >= 75)
-        {
-            rend.material.mainTexture = greenHealth;
-        }
-        else if (health > 50 && health < 75)
-        {
-            rend.material.mainTexture = yellowHealth;
-        }
+
+        // Handle wave texture
+        if (health * 0.01f > 2f / 3f)
+            rend.material.color = Color.Lerp(Color.yellow, Color.green, Mathf.InverseLerp(2f / 3f, 1f, health * 0.01f));
         else
-        {
-            rend.material.mainTexture = redHealth;
-        }
-	}
+            rend.material.color = Color.Lerp(Color.red, Color.yellow, Mathf.InverseLerp(0f, 2f / 3f, health * 0.01f));
+        rend.material.SetTextureScale("_MainTex", new Vector2(2f - health * 0.01f, Mathf.Lerp(0.75f, 1.35f, health * 0.01f)));
+        Vector2 offset = rend.material.GetTextureOffset("_MainTex");
+        rend.material.SetTextureOffset("_MainTex", new Vector2(offset.x + Time.deltaTime * (2.5f - health * 0.02f), Mathf.Lerp(0.125f, -0.185f, health * 0.01f)));
+    }
 
     public void Fix()
     {
