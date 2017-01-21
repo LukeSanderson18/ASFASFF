@@ -46,7 +46,7 @@ public class Instrument : MonoBehaviour {
         }
         if (det) //if instrumet has started detoriating, det by randDetoriation (set in Start());
         {
-            health -= Time.deltaTime * randDetoriation * (1 + timesDeteriorated);
+            health -= Time.deltaTime * randDetoriation * (1 + timesDeteriorated * 0.45f);
             if (health < 0f)
                 health = 0f;
         }
@@ -64,7 +64,6 @@ public class Instrument : MonoBehaviour {
         Vector2 offset = rend.material.GetTextureOffset("_MainTex");
         rend.material.SetTextureOffset("_MainTex", new Vector2(offset.x + Time.deltaTime * (2.5f - health * 0.02f), Mathf.Lerp(0.125f, -0.185f, health * 0.01f)));
 
-        transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = rend.material.color;
         // Update score
         GameState.Score += Time.deltaTime * Mathf.Clamp01(health * 0.0125f - 0.25f);
     }
@@ -75,7 +74,8 @@ public class Instrument : MonoBehaviour {
         if (health >= 100f) // Fully fixed
         {
             det = false;
-            Invoke("Det", Random.Range(3f, Mathf.Clamp(14f - timesDeteriorated, 4f, 100f)));
+            randDetoriation = Random.Range(2f, 3.5f);
+            Invoke("Det", Random.Range(3f, Mathf.Clamp(8f - timesDeteriorated, 4f, 100f)));
         }
     }
 
@@ -91,10 +91,9 @@ public class Instrument : MonoBehaviour {
 
         //how much time until an instrument starts detoriating
         health = 100f;
-        det = false;
-        randDetoriation = Random.Range(0.8f, 3f);
+        Invoke("Det", Random.Range(1f, 6.5f));
+        randDetoriation = Random.Range(3.5f, 5f);
         timesDeteriorated = 0;
-        Invoke("Det", Random.Range(3f, Mathf.Clamp(14f - timesDeteriorated, 4f, 100f)));
     }
 
     private void Finish()
