@@ -64,6 +64,7 @@ public class Instrument : MonoBehaviour {
         Vector2 offset = rend.material.GetTextureOffset("_MainTex");
         rend.material.SetTextureOffset("_MainTex", new Vector2(offset.x + Time.deltaTime * (2.5f - health * 0.02f), Mathf.Lerp(0.125f, -0.185f, health * 0.01f)));
 
+        transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = rend.material.color;
         // Update score
         GameState.Score += Time.deltaTime * Mathf.Clamp01(health * 0.0125f - 0.25f);
     }
