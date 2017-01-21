@@ -9,9 +9,11 @@ public class Player : MonoBehaviour {
     public new Camera camera;
     public Tomato tomato;
     public float cameraZoomSpeed = 1.0f;
-    
+    public AudioClip[] hittingSounds;
+
     private SpriteRenderer spr;
     private Rigidbody2D rb;
+    private AudioSource audio;
     private Instrument isBelowInstrument = null;
     private bool isOnTopFloor = false;
     private Vector3 cameraDefaultPosition;
@@ -25,7 +27,8 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        audio = gameObject.AddComponent<AudioSource>();
+        audio.volume = 0.5f;
         rb = GetComponent<Rigidbody2D>();
         spr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -118,6 +121,11 @@ public class Player : MonoBehaviour {
                 if (Input.GetButtonDown("Fix") && isBelowInstrument)
                 {
                     isBelowInstrument.Fix();
+                    if (hittingSounds.Length > 0)
+                    {
+                        audio.clip = hittingSounds[Random.Range(0, hittingSounds.Length)];
+                        audio.Play();
+                    }
                 }
             }
         }
