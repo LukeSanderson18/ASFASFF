@@ -39,6 +39,7 @@ public class LevelSelectManager : MonoBehaviour {
 
             clicked = 0;
             GameState.Paused = false;
+            GameState.Score = 0;
         }
     }
 
