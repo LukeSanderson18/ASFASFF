@@ -67,7 +67,7 @@ public class Instrument : MonoBehaviour {
         if (health >= 100f) // Fully fixed
         {
             det = false;
-            Invoke("Start", 0);
+            Invoke("Det", Random.Range(3f, Mathf.Clamp(14f - timesDeteriorated, 4f, 100f)));
         }
     }
 
