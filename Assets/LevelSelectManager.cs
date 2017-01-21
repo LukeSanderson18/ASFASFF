@@ -21,21 +21,13 @@ public class LevelSelectManager : MonoBehaviour {
     public void OnClick()
     {
         print("clicked!");
-        Piano.GetComponent<Instrument>().good = goodPiano;
-        Piano.GetComponent<Instrument>().bad = badPiano;
-        Trumpet.GetComponent<Instrument>().good = goodTrumpet;
-        Trumpet.GetComponent<Instrument>().bad = badTrumpet;
-        Violin.GetComponent<Instrument>().good = goodViolin;
-        Violin.GetComponent<Instrument>().bad = badViolin;
-        Tuba.GetComponent<Instrument>().good = goodTuba;
-        Tuba.GetComponent<Instrument>().bad = badTuba;
 
-        //
+        Piano.GetComponent<Instrument>().Init(goodPiano, badPiano, false);
+        Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet, false);
+        Violin.GetComponent<Instrument>().Init(goodViolin, badViolin, false);
+        Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba, false);
 
-        Piano.GetComponent<Instrument>().audioCheck = true;
-        Trumpet.GetComponent<Instrument>().audioCheck = true;
-        Violin.GetComponent<Instrument>().audioCheck = true;
-        Tuba.GetComponent<Instrument>().audioCheck = true;
+        GameState.Paused = false;
     }
 
 }
