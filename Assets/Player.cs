@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
     private float cameraDefaultSize;
     private float cameraLerpPosition;
     private bool isZoomed;
+    private bool isSpotted;
+    private bool justThrewTomato;
     Animator anim;
 	// Use this for initialization
 	void Start () {
@@ -132,15 +134,32 @@ public class Player : MonoBehaviour {
                 );
             camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, cameraDefaultSize, cameraZoomSpeed * Time.deltaTime);
         }
+
+        if (isOnTopFloor && isSpotted && !justThrewTomato)
+        {
+            Debug.Log("THROW TOMATO!");
+            justThrewTomato = true;
+        }
+        else if (!isOnTopFloor)
+            justThrewTomato = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        isBelowInstrument = collision.gameObject.GetComponent<Instrument>();
+        Instrument instrument = collision.gameObject.GetComponent<Instrument>();
+        if (instrument)
+        {
+            isBelowInstrument = instrument;
+        }
+        else if (collision.gameObject.GetComponent<Spotlight>())
+            isSpotted = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isBelowInstrument = null;
+        if (collision.gameObject.GetComponent<Instrument>())
+            isBelowInstrument = null;
+        else if (collision.gameObject.GetComponent<Spotlight>())
+            isSpotted = false;
     }
 }
