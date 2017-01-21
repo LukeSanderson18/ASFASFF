@@ -6,10 +6,11 @@ public class Tomato : MonoBehaviour {
 
     public bool isEnabled;
 
-    private float time;
+    private float time = -5f;
     private Vector3 target;
     private SpriteRenderer rend;
     private Collision2D coll;
+    private float throwOrigin;
 
 	// Use this for initialization
 	void Start () {
@@ -20,21 +21,25 @@ public class Tomato : MonoBehaviour {
 	void Update () {
         time -= Time.deltaTime * 2f;
 
-        if (time < 0f && time > -2f)
+        if (time > -2f)
         {
-            transform.position -= new Vector3(0, Time.deltaTime, 0);
-
-            if (time < -0.5f)
+            if (time < 0f)
             {
-                rend.color -= new Color(0, 0, 0, Time.deltaTime * 2f);
-            }
+                transform.position -= new Vector3(0, Time.deltaTime, 0);
 
-            isEnabled = time > -0.25f;
-        }
-        else
-        {
-            transform.localScale = new Vector3(1f, 1f, 1f) * Mathf.Lerp(4f, 20f, time);
-            transform.position = new Vector3(Mathf.Lerp(target.x, 0, time), Mathf.Lerp(target.y, -1, time), 0f);
+                if (time < -0.5f)
+                {
+                    rend.color -= new Color(0, 0, 0, Time.deltaTime * 2f);
+                }
+
+                isEnabled = time > -0.25f;
+            }
+            else if (time < 1f)
+            {
+                rend.color = Color.white;
+                transform.localScale = new Vector3(1f, 1f, 1f) * Mathf.Lerp(4f, 20f, time);
+                transform.position = new Vector3(Mathf.Lerp(target.x, target.x + throwOrigin, time), Mathf.LerpUnclamped(target.y, -5, 4 * time * time - 3 * time), 0f);
+            }
         }
 	}
 
@@ -42,6 +47,7 @@ public class Tomato : MonoBehaviour {
     {
         time = 1f;
         this.target = target;
-        rend.color = Color.white;
+        throwOrigin = Random.Range(5f, 10f) * (Random.Range(0, 2) * 2 - 1);
+        Debug.Log(throwOrigin);
     }
 }
