@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 public class PitchBend : MonoBehaviour {
     public AudioMixer m;
     int state = 0;
+    float bend = 0.05f;
 	// Use this for initialization
 	void Start () {
         m.SetFloat("pitch", 1);
@@ -28,8 +29,14 @@ public class PitchBend : MonoBehaviour {
             {
                 float r = Random.Range(-1.0f, 1.0f);
                 r = r / Mathf.Abs(r);
-                print(r);
-                m.SetFloat("pitch", (r) + 0.1f);
+                if (r < 0)
+                {
+                    m.SetFloat("pitch", 1 + (r) * bend/2);
+                }
+                else
+                {
+                    m.SetFloat("pitch", (r) + bend);
+                }
                 /*float e;
                 m.GetFloat("pitch", out e);
                 print(e); /**/

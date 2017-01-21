@@ -6,7 +6,7 @@ public class curtainScript : MonoBehaviour {
     
     private float distance;
     float screenWidth;
-    bool onStage = false;
+    bool onStage = true;
 
 	// Use this for initialization
 	void Start () {
