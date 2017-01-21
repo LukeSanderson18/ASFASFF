@@ -6,6 +6,7 @@ public class Instrument : MonoBehaviour {
 
     public AudioSource goodAudioSource;
     public AudioSource badAudioSource;
+    public CanvasManager canvas;
 
     public float health;
     float randDetoriation;
@@ -34,15 +35,8 @@ public class Instrument : MonoBehaviour {
 
         text.text = "" + health.ToString("F2");
 
-        if (health >= 50)
+        if (health <= 50)
         {
-            goodAudioSource.volume = 1;
-            badAudioSource.volume = 0;
-        }
-        else
-        {
-            goodAudioSource.volume = 0;
-            badAudioSource.volume = 1;
         }
         if (det) //if instrumet has started detoriating, det by randDetoriation (set in Start());
         {
@@ -83,12 +77,18 @@ public class Instrument : MonoBehaviour {
         goodAudioSource.clip = good;
         badAudioSource.clip = bad;
         goodAudioSource.Play();
-        badAudioSource.Play();
 
         //how much time until an instrument starts detoriating
         health = 100f;
         this.det = det;
         if (!det)
             Invoke("Det", Random.Range(3f, Mathf.Clamp(14f - timesDeteriorated, 4f, 100f)));
+
+        Invoke("Finish", good.length);
+    }
+
+    private void Finish()
+    {
+        canvas.time = 0f;
     }
 }
