@@ -29,7 +29,7 @@ public class PitchBend : MonoBehaviour {
                 float r = Random.Range(-1.0f, 1.0f);
                 r = r / Mathf.Abs(r);
                 print(r);
-                m.SetFloat("pitch", (r) * 0.9f);
+                m.SetFloat("pitch", (r) + 0.1f);
                 /*float e;
                 m.GetFloat("pitch", out e);
                 print(e); /**/
