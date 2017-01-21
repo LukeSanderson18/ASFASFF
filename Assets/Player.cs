@@ -35,6 +35,15 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown("p"))
+            GameState.Paused = !GameState.Paused;
+
+        if (GameState.Paused)
+        {
+            anim.Play("Idle");
+            return;
+        }
+
         float dx = Input.GetAxis("Horizontal");
 
         if (!isOnTopFloor || !isBelowInstrument)
@@ -172,6 +181,8 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (GameState.Paused) return;
+
         Tomato tomato = collision.gameObject.GetComponent<Tomato>();
         if (tomato)
         {
