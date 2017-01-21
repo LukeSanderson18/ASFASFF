@@ -10,6 +10,8 @@ public class Instrument : MonoBehaviour {
     public AudioSource goodAudioSource;
     public AudioSource badAudioSource;
 
+    public bool audioCheck;
+
     public float health;
     float randDetoriation;
     TextMesh text;
@@ -39,6 +41,12 @@ public class Instrument : MonoBehaviour {
 	void Update () {
         if (GameState.Paused) return;
 
+        if (audioCheck)
+        {
+            goodAudioSource.clip = good;
+            badAudioSource.clip = bad;
+            audioCheck = false;
+        }
         text.text = "" + health.ToString("F2");
 
         if (health <= 50)

@@ -29,6 +29,13 @@ public class LevelSelectManager : MonoBehaviour {
         Violin.GetComponent<Instrument>().bad = badViolin;
         Tuba.GetComponent<Instrument>().good = goodTuba;
         Tuba.GetComponent<Instrument>().bad = badTuba;
+
+        //
+
+        Piano.GetComponent<Instrument>().audioCheck = true;
+        Trumpet.GetComponent<Instrument>().audioCheck = true;
+        Violin.GetComponent<Instrument>().audioCheck = true;
+        Tuba.GetComponent<Instrument>().audioCheck = true;
     }
 
 }
