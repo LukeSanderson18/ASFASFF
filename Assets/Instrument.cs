@@ -4,13 +4,8 @@ using System.Collections;
 
 public class Instrument : MonoBehaviour {
 
-    public AudioClip good;
-    public AudioClip bad;
-
     public AudioSource goodAudioSource;
     public AudioSource badAudioSource;
-
-    public bool audioCheck;
 
     public float health;
     float randDetoriation;
@@ -25,10 +20,6 @@ public class Instrument : MonoBehaviour {
         randDetoriation = Random.Range(0.8f, 3f);
         text = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
         rend = transform.GetChild(0).GetComponent<Renderer>();
-
-        //how much time until an instrument starts detoriating
-        if (!det)
-            Invoke("Det", Random.Range(3f, Mathf.Clamp(14f - timesDeteriorated, 4f, 100f)));
 	}
 
     void Det()
@@ -41,12 +32,6 @@ public class Instrument : MonoBehaviour {
 	void Update () {
         if (GameState.Paused) return;
 
-        if (audioCheck)
-        {
-            goodAudioSource.clip = good;
-            badAudioSource.clip = bad;
-            audioCheck = false;
-        }
         text.text = "" + health.ToString("F2");
 
         if (health <= 50)
@@ -84,5 +69,18 @@ public class Instrument : MonoBehaviour {
             det = false;
             Invoke("Start", 0);
         }
+    }
+
+    public void Init(AudioClip good, AudioClip bad, bool det)
+    {
+        goodAudioSource.clip = good;
+        badAudioSource.clip = bad;
+        goodAudioSource.Play();
+
+        //how much time until an instrument starts detoriating
+        health = 100f;
+        this.det = det;
+        if (!det)
+            Invoke("Det", Random.Range(3f, Mathf.Clamp(14f - timesDeteriorated, 4f, 100f)));
     }
 }

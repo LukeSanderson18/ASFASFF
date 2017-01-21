@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameState {
 
-    public static bool Paused = false;
+    public static bool Paused = true;
 
     public static float Score = 0f;
 }
