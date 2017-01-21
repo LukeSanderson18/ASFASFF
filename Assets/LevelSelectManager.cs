@@ -51,6 +51,7 @@ public class LevelSelectManager : MonoBehaviour {
         if (clicked>=0)
         {
             clicked += Time.deltaTime;
+            GameState.Paused = false;
         }
         if(clicked > 1)
         {
@@ -59,6 +60,8 @@ public class LevelSelectManager : MonoBehaviour {
             Mathf.Lerp(transform.parent.position.y, 20, Time.deltaTime * 3),
             transform.parent.position.z);
         }
+        if (clicked > 5f)
+            clicked = -1f;
     }
 
 }
