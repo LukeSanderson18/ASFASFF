@@ -10,16 +10,15 @@ public class title : MonoBehaviour {
 
 	void Update () {
 
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && time == 0f)
         {
-            if (time == 0f)
-                showInstructions = true;
-            else if (time >= 1f && !gameStarted)
-            {
-                gameStarted = true;
-                timeStarted = time;
-                Invoke("StartGame", 0.75f);
-            }
+            showInstructions = true;
+        }
+        if ((Input.GetButtonDown("Jump") || Input.GetButtonDown("Fix")) && time >= 1f && !gameStarted)
+        {
+            gameStarted = true;
+            timeStarted = time;
+            Invoke("StartGame", 0.75f);
         }
 
         if ((showInstructions || gameStarted) && true) {
