@@ -16,6 +16,10 @@ public class PitchBend : MonoBehaviour {
         float h = GetComponent<Instrument>().health;
         if (h > 75)
         {
+            if (state != 0)
+            {
+                m.SetFloat("pitch", 1);
+            }
             state = 0;
         }
         if (h <= 75)
@@ -32,7 +36,7 @@ public class PitchBend : MonoBehaviour {
             }
             state = 1;
         }
-        if (h < 50)
+        /*if (h < 50)
         {
             if (state == 1)
             {
@@ -41,6 +45,6 @@ public class PitchBend : MonoBehaviour {
                 m.SetFloat("pitch", i * 0.9f);
             }
             state = 2;
-        }
+        }/**/
     }
 }
