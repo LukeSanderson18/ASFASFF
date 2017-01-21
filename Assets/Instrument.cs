@@ -18,7 +18,6 @@ public class Instrument : MonoBehaviour {
      
 	// Use this for initialization
 	void Start () {
-        randDetoriation = Random.Range(0.8f, 3f);
         text = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
         rend = transform.GetChild(0).GetComponent<Renderer>();
 	}
@@ -91,6 +90,9 @@ public class Instrument : MonoBehaviour {
 
         //how much time until an instrument starts detoriating
         health = 100f;
+        det = false;
+        randDetoriation = Random.Range(0.8f, 3f);
+        timesDeteriorated = 0;
         Invoke("Det", Random.Range(3f, Mathf.Clamp(14f - timesDeteriorated, 4f, 100f)));
     }
 
