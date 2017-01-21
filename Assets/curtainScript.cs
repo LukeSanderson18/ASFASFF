@@ -6,18 +6,18 @@ public class curtainScript : MonoBehaviour {
     
     private float distance;
     float screenWidth;
-    bool onStage = true;
+    bool onStage = false;
 
 	// Use this for initialization
 	void Start () {
         float posx = transform.position.x;
         if (posx < 0)
         {
-            screenWidth = -11 - posx / 5;
+            screenWidth = -10.5f;// - posx / 5;
         }
         else
         {
-            screenWidth = 10 + posx / 5;
+            screenWidth = 10.5f;// + posx / 5;
         }
         distance = screenWidth - transform.position.x;
         print(distance);
