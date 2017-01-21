@@ -4,28 +4,43 @@ using UnityEngine;
 
 public class title : MonoBehaviour {
 
-    float outfloat = 12;
-    float infloat = 3.5f;
-    bool gameStarted;
-	
-	
+    bool showInstructions, gameStarted;
+    float time;
+    float timeStarted;
+
 	void Update () {
 
         if (Input.anyKeyDown)
         {
-            gameStarted = true;
+            if (time == 0f)
+                showInstructions = true;
+            else if (time >= 1f && !gameStarted)
+            {
+                gameStarted = true;
+                timeStarted = time;
+                Invoke("StartGame", 0.75f);
+            }
         }
-        if (gameStarted)
-        {
+
+        if ((showInstructions || gameStarted) && true) {
+            time += Time.deltaTime;
+
+            float outfloat = gameStarted ? 24 : 14.5f;
             transform.position = new Vector3(transform.position.x, 
                 Mathf.Lerp(transform.position.y, outfloat, Time.deltaTime * 3), -1.08f);
-            Invoke("StartTing", 1);
-        }
-		
-	}
 
-    void StartTing()
+            Debug.Log(time);
+        }
+    }
+
+    void StartGame()
     {
         GameObject.Find("Curtains").GetComponent<CurtainManager>().open = true;
+        Invoke("Stop", 1);
+    }
+
+    void Stop()
+    {
+        this.enabled = false;
     }
 }

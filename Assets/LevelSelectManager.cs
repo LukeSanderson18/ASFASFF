@@ -49,7 +49,7 @@ public class LevelSelectManager : MonoBehaviour {
             clicked += Time.deltaTime;
             GameState.Paused = false;
         }
-        if(clicked > 1)
+        if(clicked > 0.75f)
         {
             transform.parent.position = new Vector3
             (transform.parent.position.x,
