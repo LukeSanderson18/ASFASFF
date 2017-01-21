@@ -30,20 +30,16 @@ public class LevelSelectManager : MonoBehaviour {
         {
             print("clicked!");
 
-            Piano.GetComponent<Instrument>().Init(goodPiano, badPiano, false);
-            Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet, false);
-            Violin.GetComponent<Instrument>().Init(goodViolin, badViolin, false);
-            Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba, false);
-            if (drumsOnThisTrack)
-            {
-                Drum.GetComponent<Instrument>().Init(goodDrum, goodDrum, false); //DRUMS CAN ONLY BE GOOD!!!!
-            }
+            int autostart = Random.Range(0, 5);
+            Piano.GetComponent<Instrument>().Init(goodPiano, badPiano);
+            Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet);
+            Violin.GetComponent<Instrument>().Init(goodViolin, badViolin);
+            Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba);
+            Drum.GetComponent<Instrument>().Init(goodDrum, goodDrum);
 
             clicked = 0;
             GameState.Paused = false;
         }
-
-
     }
 
     void Update()
