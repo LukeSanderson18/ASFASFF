@@ -67,15 +67,25 @@ public class Player : MonoBehaviour {
             {
                 anim.Play("Walk");
             }
-            else
+            else if (!justHitByTomato)
             {
                 anim.Play("Idle");
             }
+            else
+            {
+                anim.Play("Hit");
+            }
+            
         }
-        else
+        else if (!justHitByTomato)
         {
             anim.Play("Jump");
         }
+        else
+        {
+            anim.Play("Hit");
+        }
+
 
 
         if (dx != 0.0f && !isOnTopFloor)
