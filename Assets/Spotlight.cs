@@ -13,6 +13,8 @@ public class Spotlight : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameState.Paused) return;
+
         time += Time.deltaTime;
         Vector3 newPosition = transform.position;
         newPosition.x = Mathf.Sin(time * 0.2f) * 4f + Mathf.Sin(time * 0.5f) * 3f;

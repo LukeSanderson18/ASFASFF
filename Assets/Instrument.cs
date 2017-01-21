@@ -31,6 +31,7 @@ public class Instrument : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameState.Paused) return;
 
         text.text = "" + health.ToString("F2");
 
@@ -44,7 +45,6 @@ public class Instrument : MonoBehaviour {
         {
             health = 100f;
         }
-
 
         // Handle wave texture
         if (health * 0.01f > 2f / 3f)
