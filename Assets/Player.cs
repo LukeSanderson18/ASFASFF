@@ -43,6 +43,14 @@ public class Player : MonoBehaviour {
 
         float dx = Input.GetAxis("Horizontal");
 
+        if (isBelowInstrument && !isOnTopFloor)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
+        }
+        else
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+        }
         if (!isOnTopFloor || !isBelowInstrument)
         {
             if (dx > 0.1f)
@@ -53,6 +61,7 @@ public class Player : MonoBehaviour {
             {
                 spr.flipX = true;
             }
+
         }
         else
         {

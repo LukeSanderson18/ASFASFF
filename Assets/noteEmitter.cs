@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class noteEmitter : MonoBehaviour {
     float time = 0;
-    public float period = 1;
+    float period = 1;
 	// Use this for initialization
 	void Start () {
-		
+        period = Random.Range(0.7f, 3f);
 	}
 	
 	// Update is called once per frame
@@ -19,6 +19,8 @@ public class noteEmitter : MonoBehaviour {
             int i = transform.childCount;
             int r = Mathf.FloorToInt(Random.Range(0, i));
             transform.GetChild(r).gameObject.GetComponent<ParticleSystem>().Emit(1);
+            period = Random.Range(0.7f, 3f);
+
         }
 	}
 }
