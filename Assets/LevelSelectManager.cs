@@ -30,7 +30,6 @@ public class LevelSelectManager : MonoBehaviour {
         {
             print("clicked!");
 
-            int autostart = Random.Range(0, 5);
             Piano.GetComponent<Instrument>().Init(goodPiano, badPiano);
             Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet);
             Violin.GetComponent<Instrument>().Init(goodViolin, badViolin);

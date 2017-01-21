@@ -6,7 +6,6 @@ public class title : MonoBehaviour {
 
     bool showInstructions, gameStarted;
     float time;
-    float timeStarted;
 
 	void Update () {
 
@@ -17,7 +16,6 @@ public class title : MonoBehaviour {
         if ((Input.GetButtonDown("Jump") || Input.GetButtonDown("Fix")) && time >= 1f && !gameStarted)
         {
             gameStarted = true;
-            timeStarted = time;
             Invoke("StartGame", 0.75f);
         }
 
