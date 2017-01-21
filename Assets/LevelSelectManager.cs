@@ -12,11 +12,16 @@ public class LevelSelectManager : MonoBehaviour {
     public AudioClip badViolin;
     public AudioClip goodPiano;
     public AudioClip badPiano;
+    public AudioClip goodDrum;
+    public AudioClip badDrum;
 
     public GameObject Piano;
     public GameObject Trumpet;
     public GameObject Violin;
     public GameObject Tuba;
+    public GameObject Drum;
+
+    public bool drumsOnThisTrack;
     float clicked = -1;
 
     public void OnClick()
@@ -29,10 +34,16 @@ public class LevelSelectManager : MonoBehaviour {
             Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet, false);
             Violin.GetComponent<Instrument>().Init(goodViolin, badViolin, false);
             Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba, false);
+            if (drumsOnThisTrack)
+            {
+                Drum.GetComponent<Instrument>().Init(goodDrum, goodDrum, false); //DRUMS CAN ONLY BE GOOD!!!!
+            }
 
             clicked = 0;
             GameState.Paused = false;
         }
+
+
     }
 
     void Update()
@@ -40,7 +51,6 @@ public class LevelSelectManager : MonoBehaviour {
         if (clicked>=0)
         {
             clicked += Time.deltaTime;
-            GameState.Paused = false;
         }
         if(clicked > 1)
         {
@@ -49,8 +59,6 @@ public class LevelSelectManager : MonoBehaviour {
             Mathf.Lerp(transform.parent.position.y, 20, Time.deltaTime * 3),
             transform.parent.position.z);
         }
-        if (clicked > 5f)
-            clicked = -1f;
     }
 
 }
