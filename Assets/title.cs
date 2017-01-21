@@ -6,6 +6,7 @@ public class title : MonoBehaviour {
 
     bool showInstructions, gameStarted;
     float time;
+    public CanvasManager canvas;
 
 	void Update () {
 
@@ -38,6 +39,7 @@ public class title : MonoBehaviour {
 
     void Stop()
     {
+        canvas.gameObject.GetComponent<Canvas>().sortingOrder = 500;
         this.enabled = false;
     }
 }

@@ -8,7 +8,7 @@ public class Spotlight : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        time = Random.Range(0, Mathf.PI * 10f);
+        time = 0;// Random.Range(0, Mathf.PI * 10f);
 	}
 	
 	// Update is called once per frame
@@ -20,5 +20,7 @@ public class Spotlight : MonoBehaviour {
         newPosition.x = Mathf.Sin(time * 0.2f) * 4f + Mathf.Sin(time * 0.5f) * 3f;
         newPosition.y = 0.5f + Mathf.Sin(time * 1.15f) * 2f;
         transform.position = newPosition;
+        if (time > 1f)
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(3, 3, 1), time - 1);
 	}
 }
