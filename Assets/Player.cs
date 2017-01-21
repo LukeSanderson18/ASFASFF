@@ -7,7 +7,9 @@ public class Player : MonoBehaviour {
     public float jumpSpeed = 20f;
     public GameObject topFloor;
     public Camera camera;
+    public Tomato tomato;
     public float cameraZoomSpeed = 1.0f;
+    
     private SpriteRenderer spr;
     private Rigidbody2D rb;
     private Instrument isBelowInstrument = null;
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour {
     private bool isZoomed;
     private bool isSpotted;
     private bool justThrewTomato;
+    private bool justHitByTomato;
     Animator anim;
 	// Use this for initialization
 	void Start () {
@@ -83,7 +86,7 @@ public class Player : MonoBehaviour {
         //such lazy floor """""detection"""""
         if (rb.velocity.y == 0.0f)
         {
-            if (transform.position.y < -3.17f && isBelowInstrument)               //on bottom layer
+            if (transform.position.y < -3.17f && isBelowInstrument && !isOnTopFloor) //on bottom layer
             {
                 if (Input.GetButtonDown("Jump"))
                 {
@@ -135,9 +138,9 @@ public class Player : MonoBehaviour {
             camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, cameraDefaultSize, cameraZoomSpeed * Time.deltaTime);
         }
 
-        if (isOnTopFloor && isSpotted && !justThrewTomato)
+        if (isOnTopFloor && isSpotted && !justThrewTomato && transform.position.y > -0.26f)
         {
-            Debug.Log("THROW TOMATO!");
+            tomato.Throw(transform.position);
             justThrewTomato = true;
         }
         else if (!isOnTopFloor)
@@ -161,5 +164,25 @@ public class Player : MonoBehaviour {
             isBelowInstrument = null;
         else if (collision.gameObject.GetComponent<Spotlight>())
             isSpotted = false;
+        else if (collision.gameObject.GetComponent<Tomato>())
+            justHitByTomato = false;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Tomato tomato = collision.gameObject.GetComponent<Tomato>();
+        if (tomato)
+        {
+            if (tomato.isEnabled && !justHitByTomato)
+            {
+                justHitByTomato = true;
+
+                rb.AddForce(Vector2.up * (jumpSpeed * 0.3f));
+                topFloor.SetActive(false);
+                isOnTopFloor = false;
+            }
+            else if (!tomato.isEnabled)
+                justHitByTomato = false;
+        }
     }
 }
