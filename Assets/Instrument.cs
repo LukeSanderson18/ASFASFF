@@ -8,6 +8,10 @@ public class Instrument : MonoBehaviour {
     float randDetoriation;
     TextMesh text;
     public bool det = false;
+    public Texture greenHealth;
+    public Texture yellowHealth;
+    public Texture redHealth;
+    Renderer rend;
 
     private int timesDeteriorated;
      
@@ -15,6 +19,7 @@ public class Instrument : MonoBehaviour {
 	void Start () {
         randDetoriation = Random.Range(0.8f, 3f);
         text = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
+        rend = GetComponent<Renderer>();
 
         //how much time until an instrument starts detoriating
         if (!det)
