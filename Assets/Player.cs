@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         audio = gameObject.AddComponent<AudioSource>();
-        audio.volume = 0.5f;
+        audio.volume = 0.58f;
         rb = GetComponent<Rigidbody2D>();
         spr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
