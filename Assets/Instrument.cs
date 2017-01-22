@@ -25,6 +25,7 @@ public class Instrument : MonoBehaviour {
         text = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
         rend = transform.GetChild(0).GetComponent<Renderer>();
         boosSource = gameObject.AddComponent<AudioSource>();
+        boosSource.volume = 0.75f;
 	}
 
     void Det()
