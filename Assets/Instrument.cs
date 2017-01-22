@@ -133,4 +133,18 @@ public class Instrument : MonoBehaviour {
     {
         canvas.time = 0f;
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Player player = collision.GetComponent<Player>();
+        if (player)
+            gameObject.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = player.isOnTopFloor;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Player player = collision.GetComponent<Player>();
+        if (player)
+            gameObject.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = false;
+    }
 }
