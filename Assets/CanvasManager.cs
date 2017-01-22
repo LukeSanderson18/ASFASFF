@@ -17,7 +17,7 @@ public class CanvasManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        scoreText.text = "Score: " + (int)(GameState.Score > 5f ? GameState.Score : 0);
+        scoreText.text = GameState.Score > 5f ? "Score: " + (int)(GameState.Score) : "";
 
         if (time >= 0)
         {
