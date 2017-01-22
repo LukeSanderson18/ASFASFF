@@ -30,20 +30,35 @@ public class LevelSelectManager : MonoBehaviour {
         {
             print("clicked!");
 
-            Invoke("ASDF", 1);
+            Invoke("InitInstruments", 1);
 
             clicked = 0;
             GameState.Paused = false;
             GameState.Score = 0;
         }
     }
-    void ASDF()
+    void InitInstruments()
     {
-        Piano.GetComponent<Instrument>().Init(goodPiano, badPiano);
-        Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet);
-        Violin.GetComponent<Instrument>().Init(goodViolin, badViolin);
-        Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba);
-        Drum.GetComponent<Instrument>().Init(goodDrum, goodDrum);
+        float[] delays = { 0, 0, 0, 0, 0 };
+        float last = 0f;
+        for (int i = 0; i < 5; i++)
+        {
+            int j = Random.Range(0, 5);
+            while (delays[j] != 0f)
+            {
+                Debug.Log("Busy: " + j);
+                j = (j + 1) % 5;
+            }
+            last += Random.Range(2f, 3f);
+            delays[j] = last;
+            Debug.Log("Delays[" + j + "] = " + last);
+        }
+
+        Piano.GetComponent<Instrument>().Init(goodPiano, badPiano, delays[0]);
+        Trumpet.GetComponent<Instrument>().Init(goodTrumpet, badTrumpet, delays[1]);
+        Violin.GetComponent<Instrument>().Init(goodViolin, badViolin, delays[2]);
+        Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba, delays[3]);
+        Drum.GetComponent<Instrument>().Init(goodDrum, goodDrum, delays[4]);
     }
 
     void Update()

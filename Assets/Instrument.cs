@@ -88,7 +88,7 @@ public class Instrument : MonoBehaviour {
         recovery += 20f;
     }
 
-    public void Init(AudioClip good, AudioClip bad)
+    public void Init(AudioClip good, AudioClip bad, float delay)
     {
         if (!good || !bad) return;
 
@@ -100,7 +100,8 @@ public class Instrument : MonoBehaviour {
 
         //how much time until an instrument starts detoriating
         health = 100f;
-        Invoke("Det", Random.Range(1f, 6.5f));
+        Invoke("Det", delay);
+        Debug.Log(delay);
         randDetoriation = Random.Range(3.5f, 5f);
         timesDeteriorated = 0;
         recovery = 0f;
