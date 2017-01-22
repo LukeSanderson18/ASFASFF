@@ -11,6 +11,11 @@ public class title : MonoBehaviour {
 
 	void Update () {
 
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (Input.anyKeyDown && time == 0f)
         {
             showInstructions = true;
