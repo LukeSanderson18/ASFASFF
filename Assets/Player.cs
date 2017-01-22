@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 
     private SpriteRenderer spr;
     private Rigidbody2D rb;
-    private AudioSource audio;
+    private new AudioSource audio;
     private Instrument isBelowInstrument = null;
     private bool isOnTopFloor = false;
     private Vector3 cameraDefaultPosition;

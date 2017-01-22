@@ -14,6 +14,7 @@ public class Instrument : MonoBehaviour {
     public bool det = false;
     Renderer rend;
 
+    private float recovery;
     private int timesDeteriorated;
      
 	// Use this for initialization
@@ -44,6 +45,19 @@ public class Instrument : MonoBehaviour {
             goodAudioSource.volume = 0;
             badAudioSource.volume = 1;
         }
+
+        // Fix instrument
+        float partialRecovery = recovery * Mathf.Min(Time.deltaTime * 5f, 1);
+        recovery -= partialRecovery;
+        if (health < 100f && health + partialRecovery >= 100f)
+        {
+            det = false;
+            randDetoriation = Random.Range(2f, 3.5f);
+            Invoke("Det", Random.Range(3f, Mathf.Clamp(8f - timesDeteriorated, 4f, 100f)));
+            recovery = 0f;
+        }
+        health += partialRecovery;
+
         if (det) //if instrumet has started detoriating, det by randDetoriation (set in Start());
         {
             health -= Time.deltaTime * randDetoriation * (1 + timesDeteriorated * 0.45f);
@@ -63,21 +77,15 @@ public class Instrument : MonoBehaviour {
         rend.material.SetTextureScale("_MainTex", new Vector2(2f - health * 0.01f, Mathf.Lerp(0.75f, 1.35f, health * 0.01f)));
         Vector2 offset = rend.material.GetTextureOffset("_MainTex");
         rend.material.SetTextureOffset("_MainTex", new Vector2(offset.x + Time.deltaTime * (2.5f - health * 0.02f), Mathf.Lerp(0.125f, -0.185f, health * 0.01f)));
-
         transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = rend.material.color;
+
         // Update score
         GameState.Score += Time.deltaTime * Mathf.Clamp01(health * 0.0125f - 0.25f);
     }
 
     public void Fix()
     {
-        health += 20f;
-        if (health >= 100f) // Fully fixed
-        {
-            det = false;
-            randDetoriation = Random.Range(2f, 3.5f);
-            Invoke("Det", Random.Range(3f, Mathf.Clamp(8f - timesDeteriorated, 4f, 100f)));
-        }
+        recovery += 20f;
     }
 
     public void Init(AudioClip good, AudioClip bad)
@@ -95,6 +103,7 @@ public class Instrument : MonoBehaviour {
         Invoke("Det", Random.Range(1f, 6.5f));
         randDetoriation = Random.Range(3.5f, 5f);
         timesDeteriorated = 0;
+        recovery = 0f;
     }
 
     private void Finish()
