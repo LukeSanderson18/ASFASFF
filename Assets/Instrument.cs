@@ -57,6 +57,8 @@ public class Instrument : MonoBehaviour {
             recovery = 0f;
         }
         health += partialRecovery;
+        if (health > 100f)
+            health = 100f;
 
         if (det) //if instrumet has started detoriating, det by randDetoriation (set in Start());
         {
