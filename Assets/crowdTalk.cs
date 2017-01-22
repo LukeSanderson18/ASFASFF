@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class crowdTalk : MonoBehaviour {
 
-	AudioSource aud;
-
-    void Start()
-    {
-        aud = GetComponent<AudioSource>();
-    }
+	public AudioSource aud;
+   
 	// Update is called once per frame
 	void Update () {
 

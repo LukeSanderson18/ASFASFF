@@ -6,15 +6,18 @@ public class Tomato : MonoBehaviour {
 
     public bool isEnabled;
 
+    public Sprite normal;
+    public Sprite splatted;
     private float time = -5f;
     private Vector3 target;
-    private SpriteRenderer rend;
+    public SpriteRenderer rend;
     private Collision2D coll;
     private float throwOrigin;
 
 	// Use this for initialization
 	void Start () {
         rend = gameObject.GetComponent<SpriteRenderer>();
+        
 	}
 	
 	// Update is called once per frame
@@ -45,6 +48,7 @@ public class Tomato : MonoBehaviour {
 
     public void Throw(Vector3 target)
     {
+        rend.sprite = normal;
         time = 1f;
         this.target = target;
         throwOrigin = Random.Range(5f, 10f) * (Random.Range(0, 2) * 2 - 1);

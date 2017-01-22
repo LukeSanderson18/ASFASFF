@@ -7,12 +7,14 @@ public class title : MonoBehaviour {
     bool showInstructions, gameStarted;
     float time;
     public CanvasManager canvas;
+    public AudioSource startSound;
 
 	void Update () {
 
         if (Input.anyKeyDown && time == 0f)
         {
             showInstructions = true;
+            startSound.Play();
         }
         if ((Input.GetButtonDown("Jump") || Input.GetButtonDown("Fix")) && time >= 1f && !gameStarted)
         {

@@ -209,6 +209,7 @@ public class Player : MonoBehaviour {
         {
             if (tomato.isEnabled && justHitByTomato <= 0f && isOnTopFloor)
             {
+                tomato.rend.sprite = tomato.splatted;
                 justHitByTomato = 0.5f;
                 audio.clip = tomatoSlap;
                 audio.Play();
