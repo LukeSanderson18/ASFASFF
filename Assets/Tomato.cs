@@ -52,6 +52,5 @@ public class Tomato : MonoBehaviour {
         time = 1f;
         this.target = target;
         throwOrigin = Random.Range(5f, 10f) * (Random.Range(0, 2) * 2 - 1);
-        Debug.Log(throwOrigin);
     }
 }

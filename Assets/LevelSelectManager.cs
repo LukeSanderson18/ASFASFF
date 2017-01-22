@@ -28,8 +28,6 @@ public class LevelSelectManager : MonoBehaviour {
     {
         if (GameObject.Find("Curtains").GetComponent<CurtainManager>().open)
         {
-            print("clicked!");
-
             Invoke("InitInstruments", 1);
 
             clicked = 0;
@@ -45,7 +43,6 @@ public class LevelSelectManager : MonoBehaviour {
             int j = Random.Range(0, 5);
             while (delays[j] != 0f)
             {
-                Debug.Log("Busy: " + j);
                 j = (j + 1) % 5;
             }
             delays[j] = last;

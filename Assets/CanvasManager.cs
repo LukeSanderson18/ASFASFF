@@ -12,7 +12,6 @@ public class CanvasManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         closedPosition = transform.position;
-        Debug.Log(closedPosition);
 	}
 	
 	// Update is called once per frame

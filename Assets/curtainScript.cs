@@ -20,7 +20,6 @@ public class curtainScript : MonoBehaviour {
             screenWidth = 10.5f;// + posx / 5;
         }
         distance = screenWidth - transform.position.x;
-        print(distance);
 	}
 	
 	// Update is called once per frame

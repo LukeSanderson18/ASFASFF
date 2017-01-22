@@ -25,7 +25,7 @@ public class Instrument : MonoBehaviour {
         text = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
         rend = transform.GetChild(0).GetComponent<Renderer>();
         boosSource = gameObject.AddComponent<AudioSource>();
-        boosSource.volume = 0.75f;
+        boosSource.volume = 0.85f;
 	}
 
     void Det()
@@ -124,7 +124,6 @@ public class Instrument : MonoBehaviour {
         health = 100f;
         det = false;
         Invoke("Det", delay);
-        Debug.Log(delay);
         randDetoriation = Random.Range(3.5f, 5f);
         timesDeteriorated = 0;
         recovery = 0f;
