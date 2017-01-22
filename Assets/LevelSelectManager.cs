@@ -33,7 +33,6 @@ public class LevelSelectManager : MonoBehaviour {
             Invoke("InitInstruments", 1);
 
             clicked = 0;
-            GameState.Paused = false;
             GameState.Score = 0;
         }
     }
@@ -58,6 +57,8 @@ public class LevelSelectManager : MonoBehaviour {
         Violin.GetComponent<Instrument>().Init(goodViolin, badViolin, delays[2]);
         Tuba.GetComponent<Instrument>().Init(goodTuba, badTuba, delays[3]);
         Drum.GetComponent<Instrument>().Init(goodDrum, goodDrum, delays[4]);
+
+        GameState.Paused = false;
     }
 
     void Update()

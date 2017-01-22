@@ -7,6 +7,7 @@ public class Instrument : MonoBehaviour {
     public AudioSource goodAudioSource;
     public AudioSource badAudioSource;
     public CanvasManager canvas;
+    public AudioClip[] boos;
 
     public float health;
     float randDetoriation;
@@ -16,11 +17,14 @@ public class Instrument : MonoBehaviour {
 
     private float recovery;
     private int timesDeteriorated;
-     
+    private AudioSource boosSource;
+    private float timeForNextBoo;
+
 	// Use this for initialization
 	void Start () {
         text = transform.GetChild(0).GetChild(0).GetComponent<TextMesh>();
         rend = transform.GetChild(0).GetComponent<Renderer>();
+        boosSource = gameObject.AddComponent<AudioSource>();
 	}
 
     void Det()
@@ -83,6 +87,21 @@ public class Instrument : MonoBehaviour {
 
         // Update score
         GameState.Score += Time.deltaTime * Mathf.Clamp01(health * 0.0125f - 0.25f);
+
+        // Boo sounds
+        if (timeForNextBoo > 0)
+            timeForNextBoo -= Time.deltaTime;
+        if (health <= 25f)
+        {
+            if (timeForNextBoo <= 0f && boos.Length > 0 && !boosSource.isPlaying)
+            {
+                boosSource.clip = boos[Random.Range(0, boos.Length)];
+                boosSource.Play();
+                timeForNextBoo = Random.Range(4f, 10f);
+            }
+        }
+        else
+            timeForNextBoo = 0f;
     }
 
     public void Fix()
