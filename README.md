@@ -1,5 +1,7 @@
-# ASFASFF
-GAME JAME
+# Bum Note
 
-https://unity3d.com/learn/tutorials/topics/audio/adding-music-your-game?playlist=17096
+Global Game Jam 2017
 
+Built in Unity 5.5.0f3.
+
+Play the game [here](https://lukesanderson18.github.io/Bum-Note/).
