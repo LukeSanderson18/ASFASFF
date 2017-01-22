@@ -100,6 +100,7 @@ public class Instrument : MonoBehaviour {
 
         //how much time until an instrument starts detoriating
         health = 100f;
+        det = false;
         Invoke("Det", delay);
         Debug.Log(delay);
         randDetoriation = Random.Range(3.5f, 5f);

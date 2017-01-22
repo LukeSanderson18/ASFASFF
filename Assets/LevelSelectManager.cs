@@ -40,7 +40,7 @@ public class LevelSelectManager : MonoBehaviour {
     void InitInstruments()
     {
         float[] delays = { 0, 0, 0, 0, 0 };
-        float last = 0f;
+        float last = 0.5f;
         for (int i = 0; i < 5; i++)
         {
             int j = Random.Range(0, 5);
@@ -49,9 +49,8 @@ public class LevelSelectManager : MonoBehaviour {
                 Debug.Log("Busy: " + j);
                 j = (j + 1) % 5;
             }
-            last += Random.Range(2f, 3f);
             delays[j] = last;
-            Debug.Log("Delays[" + j + "] = " + last);
+            last += Random.Range(2f, 3f);
         }
 
         Piano.GetComponent<Instrument>().Init(goodPiano, badPiano, delays[0]);
